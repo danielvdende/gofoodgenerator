@@ -36,3 +36,7 @@ As we currently don't support updates to the database via the app, this is fine)
 - Allow for custom rulesets. This might be done by configuring it via the UI, or by passing a file.
 - Support other rules than PreparationTime. This will require more flexible use of SQL generation. 
 - Allow addition/modification/deletion of meals from the database.
+- Allow addition of links to recipes. This makes making the food a lot easier.
+- Prevent duplicate meals in a menu.
+- Prevent regeneration from generating the same meal
+- Add unique id to each dish

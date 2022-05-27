@@ -21,54 +21,55 @@
         <td id="monday_dish"></td>
         <td id="monday_category"></td>
         <td id="monday_speed"></td>
-        <td><button id="btn_monday">Swap Dish</button></td>
+        <td><button id="btn_monday" class="day_btn">Swap Dish</button></td>
     </tr>
     <tr>
         <td>Tuesday</td>
         <td id="tuesday_dish"></td>
         <td id="tuesday_category"></td>
         <td id="tuesday_speed"></td>
-        <td><button id="btn_tuesday">Swap Dish</button></td>
+        <td><button id="btn_tuesday" class="day_btn">Swap Dish</button></td>
     </tr>
     <tr>
         <td>Wednesday</td>
         <td id="wednesday_dish"></td>
         <td id="wednesday_category"></td>
         <td id="wednesday_speed"></td>
-        <td><button id="btn_wednesday">Swap Dish</button></td>
+        <td><button id="btn_wednesday" class="day_btn">Swap Dish</button></td>
     </tr>
     <tr>
         <td>Thursday</td>
         <td id="thursday_dish"></td>
         <td id="thursday_category"></td>
         <td id="thursday_speed"></td>
-        <td><button id="btn_thursday">Swap Dish</button></td>
+        <td><button id="btn_thursday" class="day_btn">Swap Dish</button></td>
     </tr>
     <tr>
         <td>Friday</td>
         <td id="friday_dish"></td>
         <td id="friday_category"></td>
         <td id="friday_speed"></td>
-        <td><button id="btn_friday">Swap Dish</button></td>
+        <td><button id="btn_friday" class="day_btn">Swap Dish</button></td>
     </tr>
     <tr>
         <td>Saturday</td>
         <td id="saturday_dish"></td>
         <td id="saturday_category"></td>
         <td id="saturday_speed"></td>
-        <td><button id="btn_saturday">Swap Dish</button></td>
+        <td><button id="btn_saturday" class="day_btn">Swap Dish</button></td>
     </tr>
     <tr>
         <td>Sunday</td>
         <td id="sunday_dish"></td>
         <td id="sunday_category"></td>
         <td id="sunday_speed"></td>
-        <td><button id="btn_sunday">Swap Dish</button></td>
+        <td><button id="btn_sunday" class="day_btn">Swap Dish</button></td>
     </tr>
 </table>
 <button id="generateButton">Generate Full Menu</button>
 </body>
 <script>
+    var menu = {};
     document.getElementById("generateButton").addEventListener("click", function(){
         var oReq = new XMLHttpRequest();
         oReq.open("GET", "http://localhost:8080/food");
@@ -77,27 +78,41 @@
         oReq.onreadystatechange = function() {
             if(oReq.readyState == 4) {
                 if (oReq.status == 200) {
-                    var response = JSON.parse(oReq.response)["data"];
-
-                    for (const key in response){
-                        var id = key.toLowerCase()
-                        document.getElementById(`${id}_dish`).innerText = response[key]["Name"]
-                        document.getElementById(`${id}_category`).innerText = response[key]["Category"]
-                        document.getElementById(`${id}_speed`).innerText = response[key]["PreparationTime"]
-                    }
+                    menu = JSON.parse(oReq.response)["data"];
+                    renderMenu(menu)
                 }
             }
         }
     });
-    document.getElementById("btn_monday").addEventListener("click", function() {
-        var oReq = new XMLHttpRequest();
-        oReq.open("GET", "http://localhost:8080/food/monday");
-        oReq.send();
-    })
 
-    document.querySelectorAll("#btn_monday #btn_tuesday #btn_wednesday #btn_thursday #btn_friday #btn_saturday #btn_sunday").forEach(item => {
+    function renderMenu(menu) {
+        for (const key in menu){
+            var id = key.toLowerCase()
+            document.getElementById(`${id}_dish`).innerText = menu[key]["Name"]
+            document.getElementById(`${id}_category`).innerText = menu[key]["Category"]
+            document.getElementById(`${id}_speed`).innerText = menu[key]["PreparationTime"]
+        }
+    }
+
+    document.querySelectorAll(".day_btn").forEach(item => {
         item.addEventListener("click", function(){
-            console.log("HHHH")
+            var dayClicked = item.id.split("_")[1]
+            var oReq = new XMLHttpRequest();
+            oReq.open("POST", `http://localhost:8080/food/${dayClicked}`);
+            oReq.setRequestHeader('Content-Type', 'application/json');
+            oReq.send(JSON.stringify(menu));
+
+
+            oReq.onreadystatechange = function() {
+                if(oReq.readyState == 4) {
+                    if (oReq.status == 200) {
+                        dish = JSON.parse(oReq.response)["data"];
+                        var formattedDay = dayClicked.charAt(0).toUpperCase() + dayClicked.slice(1)
+                        menu[formattedDay] = dish
+                        renderMenu(menu)
+                    }
+                }
+            }
         })})
 </script>
 </html>

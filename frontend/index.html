@@ -73,6 +73,21 @@
         var oReq = new XMLHttpRequest();
         oReq.open("GET", "http://localhost:8080/food");
         oReq.send();
+
+        oReq.onreadystatechange = function() {
+            if(oReq.readyState == 4) {
+                if (oReq.status == 200) {
+                    var response = JSON.parse(oReq.response)["data"];
+
+                    for (const key in response){
+                        var id = key.toLowerCase()
+                        document.getElementById(`${id}_dish`).innerText = response[key]["Name"]
+                        document.getElementById(`${id}_category`).innerText = response[key]["Category"]
+                        document.getElementById(`${id}_speed`).innerText = response[key]["PreparationTime"]
+                    }
+                }
+            }
+        }
     });
     document.getElementById("btn_monday").addEventListener("click", function() {
         var oReq = new XMLHttpRequest();

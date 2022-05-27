@@ -8,10 +8,15 @@ is that you don't want to prepare meals that take a long time to make during wee
 ## Endpoints
 
 ### `GET /`
+Return the very basic HTML page that can be used to get a menu for a week
 
 ### `GET /food`
+Retrieve a generated menu (i.e. a dish per day of the week with some properties)
 
 ### `POST /food/:day`
+For a given day, POST the previously generated menu. Using this information, a new dish will be generated for only
+the day in question. 
+
 
 ## How to run
 First build the docker image:
@@ -28,7 +33,6 @@ As we currently don't support updates to the database via the app, this is fine)
 
 
 ## Features still to come
-- Setup ci/cd
 - Allow for custom rulesets. This might be done by configuring it via the UI, or by passing a file.
 - Support other rules than PreparationTime. This will require more flexible use of SQL generation. 
 - Allow addition/modification/deletion of meals from the database.

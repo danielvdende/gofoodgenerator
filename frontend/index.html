@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello, world!</title>
+</head>
+<body style="font-family: sans-serif">
+<h1>Weekly Menu Generator</h1>
+<table>
+    <tr>
+        <th>Day</th>
+        <th>Dish</th>
+        <th>Category</th>
+        <th>Preparation Tme</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Monday</td>
+        <td id="monday_dish"></td>
+        <td id="monday_category"></td>
+        <td id="monday_speed"></td>
+        <td><button id="btn_monday">Swap Dish</button></td>
+    </tr>
+    <tr>
+        <td>Tuesday</td>
+        <td id="tuesday_dish"></td>
+        <td id="tuesday_category"></td>
+        <td id="tuesday_speed"></td>
+        <td><button id="btn_tuesday">Swap Dish</button></td>
+    </tr>
+    <tr>
+        <td>Wednesday</td>
+        <td id="wednesday_dish"></td>
+        <td id="wednesday_category"></td>
+        <td id="wednesday_speed"></td>
+        <td><button id="btn_wednesday">Swap Dish</button></td>
+    </tr>
+    <tr>
+        <td>Thursday</td>
+        <td id="thursday_dish"></td>
+        <td id="thursday_category"></td>
+        <td id="thursday_speed"></td>
+        <td><button id="btn_thursday">Swap Dish</button></td>
+    </tr>
+    <tr>
+        <td>Friday</td>
+        <td id="friday_dish"></td>
+        <td id="friday_category"></td>
+        <td id="friday_speed"></td>
+        <td><button id="btn_friday">Swap Dish</button></td>
+    </tr>
+    <tr>
+        <td>Saturday</td>
+        <td id="saturday_dish"></td>
+        <td id="saturday_category"></td>
+        <td id="saturday_speed"></td>
+        <td><button id="btn_saturday">Swap Dish</button></td>
+    </tr>
+    <tr>
+        <td>Sunday</td>
+        <td id="sunday_dish"></td>
+        <td id="sunday_category"></td>
+        <td id="sunday_speed"></td>
+        <td><button id="btn_sunday">Swap Dish</button></td>
+    </tr>
+</table>
+<button id="generateButton">Generate Full Menu</button>
+</body>
+<script>
+    document.getElementById("generateButton").addEventListener("click", function(){
+        var oReq = new XMLHttpRequest();
+        oReq.open("GET", "http://localhost:8080/food");
+        oReq.send();
+    });
+    document.getElementById("btn_monday").addEventListener("click", function() {
+        var oReq = new XMLHttpRequest();
+        oReq.open("GET", "http://localhost:8080/food/monday");
+        oReq.send();
+    })
+
+    document.querySelectorAll("#btn_monday #btn_tuesday #btn_wednesday #btn_thursday #btn_friday #btn_saturday #btn_sunday").forEach(item => {
+        item.addEventListener("click", function(){
+            console.log("HHHH")
+        })})
+</script>
+</html>

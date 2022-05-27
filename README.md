@@ -1,4 +1,4 @@
-# GoFoodGenerator
+# 🍔 GoFoodGenerator
 
 The GoFoodGenerator is a small app written in Golang to generate weekly menu's. The idea is that coming up with what 
 to eat in a week can be hard (and can be automated relatively easily). The GoFoodGenerator will generate a menu for a week

@@ -23,6 +23,7 @@ type Menu struct {
 func Run() {
 	router := gin.Default()
 	router.StaticFile("/", "./frontend/index.html")
+	SetupDatabase()
 
 	router.GET("/food", func(c *gin.Context) {
 		dishes := GenerateFood()
@@ -35,12 +36,11 @@ func Run() {
 
 	router.POST("/food/:day", func(c *gin.Context) {
 		var json map[string]Dish
-		// TODO: this needs more params: needs full week menu to avoid duplicates. Assumes ruleset is static
 		day := c.Param("day")
 		c.BindJSON(&json)
 
-		// TODO: no guarantee you won't get the same dish again
-		newDish := generateFoodForDay(day, rules[day], allDishes)
+		// TODO: no guarantee you won't get the same dish again, nor that you won't get a duplicate in your menu
+		newDish := generateFoodForDay(rules[day])
 
 		c.JSON(200, gin.H{
 			"status": "OK",

@@ -10,16 +10,6 @@ type Dish struct {
 	PreparationTime string
 }
 
-type Menu struct {
-	Monday    Dish
-	Tuesday   Dish
-	Wednesday Dish
-	Thursday  Dish
-	Friday    Dish
-	Saturday  Dish
-	Sunday    Dish
-}
-
 func Run() {
 	router := gin.Default()
 	router.StaticFile("/", "./frontend/index.html")

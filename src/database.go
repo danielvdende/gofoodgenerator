@@ -12,6 +12,7 @@ import (
 	"strings"
 )
 
+var sqlitePath = "./sqlite-database.db"
 var sqlDatabase = SetupDatabase()
 
 func fileExists(filename string) bool {
@@ -23,10 +24,9 @@ func fileExists(filename string) bool {
 }
 
 func SetupDatabase() *sql.DB {
-	sqlitePath := "./sqlite-database.db"
 	databaseExists := fileExists(sqlitePath)
 
-	sqliteDatabase, err := sql.Open("sqlite3", "./sqlite-database.db")
+	sqliteDatabase, err := sql.Open("sqlite3", sqlitePath)
 	if err != nil {
 		log.Fatal(err)
 	}
